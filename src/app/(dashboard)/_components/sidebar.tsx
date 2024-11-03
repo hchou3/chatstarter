@@ -22,9 +22,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { NewDirectMessage } from "./new-direct-message";
+import { usePathname } from "next/navigation";
 
 export function DashboardSidebar() {
   const user = useQuery(api.functions.user.get);
+  const directMessages = useQuery(api.functions.dm.list);
+  const pathName = usePathname();
   if (!user) {
     return null;
   }
@@ -36,7 +40,7 @@ export function DashboardSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton asChild isActive={pathName === "/"}>
                   <Link href="/friends">
                     <User2Icon />
                     Friends
@@ -47,10 +51,28 @@ export function DashboardSidebar() {
           </SidebarGroupContent>
           <SidebarGroup>
             <SidebarGroupLabel>Direct Messages</SidebarGroupLabel>
-            <SidebarGroupAction>
-              <PlusIcon />
-              <span className="sr-only">New Direct Message</span>
-            </SidebarGroupAction>
+            <NewDirectMessage />
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {directMessages?.map((directMessage) => (
+                  <SidebarMenuItem key={directMessage._id}>
+                    <SidebarMenuButton asChild isActive={pathName === "/"}>
+                      <Link href={`/dms/${directMessage._id}`}>
+                        <Avatar className="size-6">
+                          <AvatarImage src={directMessage.user.image} />
+                          <AvatarFallback>
+                            {directMessage.user.username[0]}
+                          </AvatarFallback>
+                        </Avatar>
+                        <p className="font-medium">
+                          {directMessage.user.username}
+                        </p>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
           </SidebarGroup>
         </SidebarGroup>
       </SidebarContent>
