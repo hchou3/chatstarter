@@ -1,9 +1,9 @@
-import { autheticatedMutation, autheticatedQuery } from "./helpers";
+import { authenticatedMutation, authenticatedQuery } from "./helpers";
 import { Id } from "../_generated/dataModel";
 import { QueryCtx } from "../_generated/server";
 import { v } from "convex/values";
 
-export const listPending = autheticatedQuery({
+export const listPending = authenticatedQuery({
   handler: async (ctx) => {
     const friends = await ctx.db
       .query("friends")
@@ -15,7 +15,7 @@ export const listPending = autheticatedQuery({
   },
 });
 
-export const listAccepted = autheticatedQuery({
+export const listAccepted = authenticatedQuery({
   handler: async (ctx) => {
     const friends1 = await ctx.db
       .query("friends")
@@ -35,7 +35,7 @@ export const listAccepted = autheticatedQuery({
   },
 });
 
-export const createFriendRequest = autheticatedMutation({
+export const createFriendRequest = authenticatedMutation({
   args: { username: v.string() },
   handler: async (ctx, { username }) => {
     const user = await ctx.db
@@ -55,7 +55,7 @@ export const createFriendRequest = autheticatedMutation({
   },
 });
 
-export const updateStatus = autheticatedMutation({
+export const updateStatus = authenticatedMutation({
   args: {
     id: v.id("friends"),
     status: v.union(v.literal("accepted"), v.literal("rejected")),

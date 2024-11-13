@@ -6,7 +6,7 @@ import {
 } from "convex-helpers/server/customFunctions";
 import { mutation, query } from "../_generated/server";
 
-export const autheticatedQuery = customQuery(
+export const authenticatedQuery = customQuery(
   query,
   customCtx(async (ctx) => {
     const user = await getCurrentUser(ctx);
@@ -17,7 +17,7 @@ export const autheticatedQuery = customQuery(
   })
 );
 
-export const autheticatedMutation = customMutation(
+export const authenticatedMutation = customMutation(
   mutation,
   customCtx(async (ctx) => {
     const user = await getCurrentUser(ctx);
