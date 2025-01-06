@@ -15,11 +15,6 @@ import { useMutation } from "convex/react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export function AddFriend() {
-  const [open, setOpen] = useState(false);
-  const createFriendRequest = useMutation(
-    api.functions.friend.createFriendRequest
-  );
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
