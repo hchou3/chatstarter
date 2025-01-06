@@ -1,6 +1,9 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
+import { create } from "domain";
 
 export default clerkMiddleware();
+
+export const helloword = { create: "hello world" };
 
 export const config = {
   matcher: [
